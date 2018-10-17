@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <Sensor.h>
 
-#define SENSOR_PIN_1 2
-#define SENSOR_PIN_2 3
+#define SENSOR_PIN_1 3
+#define SENSOR_PIN_2 2
 #define SAMPLE_STEP_PERIOD 1 //in miliseconds
 #define SAMPLE_PERIOD 20
 

@@ -6,7 +6,7 @@
 
   void setup () {
     // set the window size:
-    size(275, 300);
+    size(900, 550);
     
     println(Serial.list());
     // Open whatever port is the one you're using.
@@ -16,11 +16,19 @@
   }
 
   void draw () {
-    background(0);
-    fill(0,0,255);
-    rect(25, height - value1*height, 100, value1*height);
-    fill(0,255,0);
-    rect(150, height - value2*height, 100, value2*height);
+    background(50);
+    stroke(50);
+    fill(50,50,200);
+    rect(100, (height - 50) - value1*(height - 50), 300, value1*(height - 50));
+    fill(50,200,50);
+    rect(500, (height - 50) - value2*(height - 50), 300, value2*(height - 50));
+    stroke(150,150,150);
+    line(0, height-50, width, height-50);
+    fill(255,255,255);
+    textAlign(CENTER, CENTER);
+    textSize(25);
+    text("Sensor #1", 100, height - 50, 300, 50);
+    text("Sensor #2", 500, height - 50, 300, 50);
   }
 
   void serialEvent (Serial myPort) {
