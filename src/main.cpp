@@ -118,7 +118,11 @@ void setup()
 
     queue1 = xQueueCreate(1, sizeof(float));
     queue2 = xQueueCreate(1, sizeof(float));
-
+    if(queue1 == NULL)
+        Serial.println("Error al crear cola 1");
+    if(queue2 == NULL)
+        Serial.println("Error al crear cola 2");
+        
     //xTaskCreate(task_IDLE, "task_IDLE", 128, NULL, 0, NULL);
     xTaskCreate(task_sensor_1, "task_sensor_1", 256, NULL, 1, NULL);
     xTaskCreate(task_sensor_2, "task_sensor_2", 256, NULL, 1, NULL);
