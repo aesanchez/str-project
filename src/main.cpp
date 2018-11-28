@@ -7,42 +7,48 @@
 #define PIN_SENSOR_1 3
 #define PIN_SENSOR_2 2
 #define SAMPLE_STEP_PERIOD 16 //in miliseconds. el minimo es de 16 por cosas de FREERTOS
-#define SAMPLE_PERIOD 16*5
+#define SAMPLE_PERIOD 16*3
 
 QueueHandle_t queue1;
 QueueHandle_t queue2;
 
 void task_sensor_1(void *pvParameters)
 {
-    Sensor sensor1(PIN_SENSOR_1);
+    Sensor sensor(PIN_SENSOR_1);
     float value;
     int i;
     while (1)
     {   
-        sensor1.measure_init();
+        sensor.measure_init();
         for (i = 0; i < SAMPLE_PERIOD; i += SAMPLE_STEP_PERIOD)
         {
-            sensor1.measure_tick();
+            sensor.measure_tick();
+            //fix feo
+            delay(8);
+            sensor.measure_tick();
             vTaskDelay(SAMPLE_STEP_PERIOD/portTICK_PERIOD_MS);
         }
-        value = sensor1.get_value();
+        value = sensor.get_value();
         xQueueSend(queue1, &value, portMAX_DELAY);
     }
 }
 void task_sensor_2(void *pvParameters)
 {
     float value;
-    Sensor sensor2(PIN_SENSOR_2);
+    Sensor sensor(PIN_SENSOR_2);
     int i;
     while (1)
     {   
-        sensor2.measure_init();
+        sensor.measure_init();
         for (i = 0; i < SAMPLE_PERIOD; i += SAMPLE_STEP_PERIOD)
         {
-            sensor2.measure_tick();
+            sensor.measure_tick();
+            //fix feo
+            delay(8);
+            sensor.measure_tick();
             vTaskDelay(SAMPLE_STEP_PERIOD/portTICK_PERIOD_MS);
         }
-        value = sensor2.get_value();
+        value = sensor.get_value();
         xQueueSend(queue2, &value, portMAX_DELAY);
     }
 }
