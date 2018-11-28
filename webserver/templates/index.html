@@ -1,0 +1,61 @@
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        socket.on('connect', function () {
+            console.log('connected');
+        });
+        socket.on('value', function (data) {
+            var text = document.getElementById('text');
+            text.innerHTML = data.value;
+            update_chart(data.value);
+        });
+    </script>
+</head>
+
+<body>
+    <div style="max-width: 50%">
+        <canvas id="myChart"></canvas>
+
+    </div>
+    <p id="text">
+    </p>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: ["Sensor 1", "Sensor 2"],
+                datasets: [{
+                    label: "My First dataset",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 0],
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                           max: 10
+                        }
+                    }]
+                },
+                animation: {
+                    duration: 50,
+                    easing: "easeInOutQuad"
+                }
+            }
+        });
+        function update_chart(v) {
+            chart.data.datasets[0].data[0] = v;
+            chart.update();
+        }
+    </script>
+</body>
