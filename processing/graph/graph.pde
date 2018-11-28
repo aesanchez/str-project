@@ -34,6 +34,7 @@
   void serialEvent (Serial myPort) {
     String str = myPort.readStringUntil('\n');
     if(str == null) return;
+    print(str);
     String[] values = split(str, '/');
     value1 = float(values[0]);
     value2 = float(values[1]);
